@@ -14,57 +14,19 @@
 <body>
 
 <button id="restart_btn">Restart</button>
-<p id="msg"></p>
+
 <h1>Karkonosze</h1>
 
 <div class="carousel">
-    <div class="carousel-cell" id="carousel-cell">
+    <script id="flickity_template" type="x-tmpl-mustache">
+    <div class="carousel-cell" id="carousel-cell{{ counter }}">
         <div class="container">
-            <h2>Czarny Grzbiet w Karkonoszach</h2>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Czarny_Grzbiet_2.jpg" alt="Czarny Grzbiet w Karkonoszach" title="Szczyt Czarego Grzbietu" />
+            <h2>{{ header }}</h2>
+        <img src="{{ url }}" alt="{{ alt }}" title="{{ title }}" />
         </div>
-        <a href="#carousel-cell"></a>
+        <a href="#carousel-cell{{ counter }}"></a>
     </div>
-
-    <div class="carousel-cell" id="carousel-cell2">
-        <div class="container">
-            <h2>Wielki Szyszak</h2>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/2015_Wielki_Szyszak%2C_Karkonosze%2C_Sudety_1.jpg" alt="Wielki Szyszak w Karkonoszach" title="Wielki Szyszak w Karkonoszach"/>
-        </div>
-        <a href="#carousel-cell2"></a>
-    </div>
-
-    <div class="carousel-cell" id="carousel-cell3">
-        <div class="container">
-            <h2>Kopa</h2>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Kopa_1.jpg" alt="Kopa w Karkonoszach" title="Kopa w Karkonoszach" />
-        </div>
-        <a href="#carousel-cell3"></a>
-    </div>
-
-    <div class="carousel-cell" id="carousel-cell4">
-        <div class="container">
-            <h2>Łabski Szczyt</h2>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/%C5%81abski_Szczyt_1.jpg" alt="Łabski Szczyt" title="Łabski Szczyt" />
-        </div>
-        <a href="#carousel-cell4"></a>
-    </div>
-
-    <div class="carousel-cell" id="carousel-cell5">
-        <div class="container">
-            <h2>Szrenica</h2>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/%C5%9Acie%C5%BCka_do_schroniska_Szrenica_w_Karkonoszach_%28Reiftr%C3%A4gerbaude1%29.jpg" alt="Szrenica" title="Szrenica" />
-        </div>
-        <a href="#carousel-cell5"></a>
-    </div>
-
-    <div class="carousel-cell" id="carousel-cell6">
-        <div class="container">
-            <h2>Śnieżka</h2>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/%C5%9Anie%C5%BCka_z_zachodu.jpg" alt="Śnieżka" title="Śnieżka" />
-        </div>
-        <a href="#carousel-cell6"></a>
-    </div>
+    </script>
 
 </div>
 <div class="progress-bar"></div>
@@ -72,6 +34,7 @@
 
 <script src="./vendor/flickity.pkgd.min.js"></script>
 <script src="./vendor/hash.js"></script>
+<script src="./vendor/mustache.min.js"></script>
 
 <script src="./js/script.js"></script>
 </body>
