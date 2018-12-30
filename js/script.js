@@ -99,8 +99,6 @@ function restartCarousel(){
 
 function initMap() {
 
-    //~ const map = new google.maps.Map(document.getElementById('map'), {zoom: 10, center: peaks["łabski szczyt"]});
-
     map = new google.maps.Map(document.getElementById('map'));
 
     map.setCenter(peaks["Wielki Szyszak"]);
