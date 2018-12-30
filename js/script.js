@@ -42,6 +42,7 @@ const peaks = {
 };
 
 let map;
+let marker_selected = true;
 
 
 (function (){
@@ -87,6 +88,10 @@ flkty.on( 'scroll', function(progress) {
 flkty.on('change', function(index){
     //~ event.preventDefault();
     let name = template_data[index].header;
+    if (marker_selected) {
+        marker_selected = false;
+        return
+    }
     map.setCenter(peaks[name]);
 });
 
@@ -94,7 +99,6 @@ flkty.on('change', function(index){
 function restartCarousel(){
     flkty.select(0);
 };
-
 
 
 function initMap() {
@@ -108,7 +112,7 @@ function initMap() {
         const marker = new google.maps.Marker({position: coords, map: map, title: pk, labelContent: pk});
             marker.addListener('click', function(event){
             flkty.select(getIndexOf(pk));
-            event.preventBubble();
+            marker_selected = true;
           });
     }
 };
