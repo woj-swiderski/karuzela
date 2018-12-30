@@ -13,7 +13,7 @@ const template_data = [
 
     { header: "Kopa",
       url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Kopa_1.jpg",
-      alt: "Kopa w Karkonoszach",
+      alt: "Kopa pod Śnieżką",
       title: "Kopa w Karkonoszach" },
 
     { header: "Łabski Szczyt",
@@ -28,9 +28,21 @@ const template_data = [
 
     { header: "Śnieżka",
       url: "https://upload.wikimedia.org/wikipedia/commons/8/8a/%C5%9Anie%C5%BCka_z_zachodu.jpg",
-      alt: "Śnieżka",
+      alt: "Śnieżka, najwyższy szczyt Karkonoszy",
       title: "Śnieżka"}
 ];
+
+
+const peaks = {
+    "Szrenica": {lat: 50.792925, lng: 15.512867},
+    "Śnieżka": {lat: 50.736111, lng: 15.740278},
+    "Wielki Szyszak": {lat: 50.776942, lng: 15.567814},
+    "Kopa": {lat: 50.746642, lng: 15.730317},
+    "Łabski Szczyt": {lat: 50.780506, lng: 15.5457}
+};
+
+let map;
+
 
 (function (){
     const template = document.getElementById('flickity_template').innerHTML;
@@ -44,7 +56,6 @@ const template_data = [
         t.counter = i;
 
         res += Mustache.render(template, t);
-
     }
 
     insertPoint.innerHTML = res;
@@ -54,12 +65,11 @@ const template_data = [
 
 const elem = document.querySelector('.carousel');
 const flkty = new Flickity( elem, {
-  // options
-  cellAlign: 'center',
-  contain: true,
-  pageDots: false,
-  lazyLoad: true,
-  hash: true
+    cellAlign: 'center',
+    contain: true,
+    pageDots: false,
+    lazyLoad: true,
+    hash: true
 });
 
 const progressBar = document.querySelector('.progress-bar')
@@ -69,37 +79,47 @@ restart_btn.addEventListener('click', restartCarousel);
 
 
 flkty.on( 'scroll', function(progress) {
-  progress = Math.max( 0, Math.min( 1, progress ) );
-  progressBar.style.width = progress * 80 + '%';
+    progress = Math.max( 0, Math.min(1, progress));
+    progressBar.style.width = progress * 80 + '%';
 });
+
+
+flkty.on('change', function(index){
+    //~ event.preventDefault();
+    let name = template_data[index].header;
+    map.setCenter(peaks[name]);
+});
+
 
 function restartCarousel(){
     flkty.select(0);
 };
 
 
+
 function initMap() {
-
-    const peaks = {
-        "Szrenica": {lat: 50.792925, lng: 15.512867},
-        "Śnieżka": {lat: 50.736111, lng: 15.740278},
-        "Wielki Szyszak": {lat: 50.776942, lng: 15.567814},
-        "Kopa": {lat: 50.746642, lng: 15.730317},
-        "Łabski Szczyt": {lat: 50.780506, lng: 15.5457}
-    };
-
 
     //~ const map = new google.maps.Map(document.getElementById('map'), {zoom: 10, center: peaks["łabski szczyt"]});
 
-    const map = new google.maps.Map(document.getElementById('map'));
+    map = new google.maps.Map(document.getElementById('map'));
 
     map.setCenter(peaks["Wielki Szyszak"]);
     map.setZoom(10);
 
     for (let [pk, coords] of Object.entries(peaks)) {
         const marker = new google.maps.Marker({position: coords, map: map, title: pk, labelContent: pk});
-            marker.addListener('click', ()=>{
-            map.setCenter(coords);
-        });
+            marker.addListener('click', function(event){
+            flkty.select(getIndexOf(pk));
+            event.preventBubble();
+          });
     }
 };
+
+
+function getIndexOf(item){
+    for (let i=0; i < template_data.length; i++){
+        if (item === template_data[i].header) {
+            return i
+        }
+    }
+}
