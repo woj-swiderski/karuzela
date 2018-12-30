@@ -88,10 +88,6 @@ flkty.on( 'scroll', function(progress) {
 flkty.on('change', function(index){
     //~ event.preventDefault();
     let name = template_data[index].header;
-    if (marker_selected) {
-        marker_selected = false;
-        return
-    }
     map.setCenter(peaks[name]);
 });
 
@@ -112,7 +108,6 @@ function initMap() {
         const marker = new google.maps.Marker({position: coords, map: map, title: pk, labelContent: pk});
             marker.addListener('click', function(event){
             flkty.select(getIndexOf(pk));
-            marker_selected = true;
           });
     }
 };
