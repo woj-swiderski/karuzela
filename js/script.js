@@ -106,10 +106,16 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'));
 
     map.setCenter(peaks["Wielki Szyszak"]);
-    map.setZoom(10);
+    map.setZoom(11);
 
     for (let [pk, coords] of Object.entries(peaks)) {
-        const marker = new google.maps.Marker({position: coords, map: map, title: pk, labelContent: pk});
+        const marker = new google.maps.Marker({
+            position: coords,
+            map: map,
+            title: pk,
+            label: pk
+            });
+
             marker.addListener('click', function(event){
                 marker_selected = true;
                 flkty.select(getIndexOf(pk));
